@@ -17,10 +17,6 @@ const io = require('socket.io').listen(server);
 
 const PORT = process.env.PORT || 80;
 
-server.get('/heartbeat', (req, res) => {
-    res.send('working!');
-});
-
 server.listen(PORT, null, () => {
     console.log('Listening on port ' + PORT);
 });
