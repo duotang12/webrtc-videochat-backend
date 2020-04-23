@@ -5,17 +5,21 @@ const cors = require('cors');
 const main = express();
 main.use(cors());
 main.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     next();
 });
 
 const server = http.createServer(main);
 const io = require('socket.io').listen(server);
 
-const PORT = 8080;
+const PORT = process.env.PORT || 80;
+
+server.get('/heartbeat', (req, res) => {
+    res.send('working!');
+});
 
 server.listen(PORT, null, () => {
     console.log('Listening on port ' + PORT);
