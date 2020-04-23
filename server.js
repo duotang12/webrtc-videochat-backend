@@ -39,7 +39,6 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('join', (config) => {
         console.log(socket.id, ' joins ', config.channel);
-
         const channel = config.channel;
 
         if (channel in socket.channels) {
@@ -48,6 +47,11 @@ io.sockets.on('connection', (socket) => {
 
         if (!(channel in channels)) {
             channels[channel] = {};
+        }
+
+        if (Object.keys(channels[channel]).length === 5) {
+            socket.emit('roomFull');
+            return;
         }
 
         for (const id in channels[channel]) {
